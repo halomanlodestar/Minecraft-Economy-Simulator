@@ -1,5 +1,7 @@
 /** @format */
 
+import { resource } from "../types";
+
 const abundancyScale: any = {
 	coal: 24.74,
 	iron: 22.76,
