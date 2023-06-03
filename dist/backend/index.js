@@ -8,4 +8,3 @@ async function run() {
     (0, mongoose_1.connectDatabase)();
 }
 run();
-//

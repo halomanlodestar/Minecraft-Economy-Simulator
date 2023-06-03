@@ -8,4 +8,3 @@ async function run() {
 	connectDatabase();
 }
 run();
-//
