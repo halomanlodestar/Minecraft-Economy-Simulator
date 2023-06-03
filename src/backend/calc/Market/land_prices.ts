@@ -1,15 +1,15 @@
 /** @format */
 
 interface data {
-	numberOfPlayers: number;
+	maxNumberOfPlayers: number;
 	govtFunds: number;
 	landLeft: number;
 }
 
 export const landPrices = ({
-	numberOfPlayers,
+	maxNumberOfPlayers,
 	govtFunds,
 	landLeft,
 }: data): number => {
-	return numberOfPlayers * (1 / govtFunds) * (1 / landLeft) * 100000;
+	return maxNumberOfPlayers * (1 / govtFunds) * (1 / landLeft) * 100000;
 };

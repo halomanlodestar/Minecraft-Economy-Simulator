@@ -1,6 +1,8 @@
 /** @format */
 
+import { getUser } from ".";
 import User from "../mongo/Schemas/User";
+import { IUser } from "../types";
 export const addUser = async (
 	id: number,
 	name: string,
@@ -8,12 +10,12 @@ export const addUser = async (
 	valuation = 0,
 	balance = 0
 ) => {
-	if (await User.findOne({ id: id, name: name })) {
+	if (((await getUser(id)) as IUser).id === id) {
 		return "User already exists";
 	}
 
 	const user = new User({ id, name, balance, gamerTag, valuation });
-	user.save().then();
+	await user.save();
 
 	return "User successfully created";
 };

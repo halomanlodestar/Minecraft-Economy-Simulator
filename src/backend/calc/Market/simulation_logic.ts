@@ -1,6 +1,6 @@
 /** @format */
 
-import { resource } from "../types";
+import { resource } from "../../types";
 
 const abundancyScale: any = {
 	coal: 24.74,

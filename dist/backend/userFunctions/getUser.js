@@ -10,6 +10,6 @@ const getUser = async (id) => {
     if (!(await User_1.default.findOne({ id: id }))) {
         return "user not found";
     }
-    return await User_1.default.findOne({ id: id });
+    return (await User_1.default.findOne({ id: id }));
 };
 exports.getUser = getUser;
