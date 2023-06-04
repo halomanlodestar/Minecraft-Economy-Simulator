@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateUser = exports.getUser = exports.addUser = void 0;
 /** @format */
+// EXPORTING ALL user functions
 var addUser_1 = require("./addUser");
 Object.defineProperty(exports, "addUser", { enumerable: true, get: function () { return addUser_1.addUser; } });
 var getUser_1 = require("./getUser");
