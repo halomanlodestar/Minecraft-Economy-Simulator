@@ -6,13 +6,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Coin = void 0;
 const GovernmentReserve_1 = __importDefault(require("../../mongo/Schemas/GovernmentReserve"));
-const RelativeValues_1 = __importDefault(require("../../mongo/Schemas/RelativeValues"));
 const User_1 = __importDefault(require("../../mongo/Schemas/User"));
 const rarityFactory = {
-    diamond: 5,
-    emerald: 15,
-    gold: 17,
-    iron: 17,
+    diamond: 0.2,
+    emerald: 1.2,
+    gold: 1.0,
+    iron: 1.1,
 };
 const totalAmount = 10000;
 const Coin = async (concurrentPlayers) => {
@@ -24,15 +23,11 @@ const Coin = async (concurrentPlayers) => {
         diamond: calcualteRelativeValues(diamond, concurrentPlayers, balance, "diamond"),
         iron: calcualteRelativeValues(iron, concurrentPlayers, balance, "iron"),
     };
-    new RelativeValues_1.default({ ...relativeValues }).save();
+    // new RelativeValues({ ...relativeValues }).save();
+    console.log(relativeValues);
 };
 exports.Coin = Coin;
 const calcualteRelativeValues = (amount, concurrentPlayers, balance, name) => {
-    const coinsFactor = balance / totalAmount;
-    const playersFactor = concurrentPlayers / 100;
-    const secondaryCurrencyFactor = amount / totalAmount;
-    const rarityFactor = 1 + (rarityFactory[name] - 1) * (secondaryCurrencyFactor / coinsFactor);
-    const value = (coinsFactor + playersFactor - secondaryCurrencyFactor * rarityFactor) *
-        100;
-    return (Math.round((((amount / totalAmount) * concurrentPlayers) / balance) * 10 ** 6) + 1);
+    const value = (amount * concurrentPlayers * rarityFactory[name] * 100) / balance + 1;
+    return Math.round(value);
 };

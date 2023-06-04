@@ -13,10 +13,10 @@ interface resources {
 }
 
 const rarityFactory = {
-	diamond: 5,
-	emerald: 15,
-	gold: 17,
-	iron: 17,
+	diamond: 0.2,
+	emerald: 1.2,
+	gold: 1.0,
+	iron: 1.1,
 };
 
 const totalAmount = 10000;
@@ -26,6 +26,7 @@ export const Coin = async (concurrentPlayers: number) => {
 		(await GovernmentReserve.find()) as resources[];
 
 	const { balance } = (await User.findOne({ id: 100 })) as IUser;
+
 	const relativeValues = {
 		emerald: calcualteRelativeValues(
 			emerald,
@@ -53,7 +54,8 @@ export const Coin = async (concurrentPlayers: number) => {
 		),
 	};
 
-	new RelativeValues({ ...relativeValues }).save();
+	// new RelativeValues({ ...relativeValues }).save();
+	console.log(relativeValues);
 };
 
 const calcualteRelativeValues = (
@@ -62,17 +64,7 @@ const calcualteRelativeValues = (
 	balance: number,
 	name: "diamond" | "gold" | "emerald" | "iron"
 ) => {
-	const coinsFactor = balance / totalAmount;
-	const playersFactor = concurrentPlayers / 100;
-	const secondaryCurrencyFactor = amount / totalAmount;
-	const rarityFactor =
-		1 + (rarityFactory[name] - 1) * (secondaryCurrencyFactor / coinsFactor);
 	const value =
-		(coinsFactor + playersFactor - secondaryCurrencyFactor * rarityFactor) *
-		100;
-	return (
-		Math.round(
-			(((amount / totalAmount) * concurrentPlayers) / balance) * 10 ** 6
-		) + 1
-	);
+		(amount * concurrentPlayers * rarityFactory[name] * 100) / balance + 1;
+	return Math.round(value);
 };
