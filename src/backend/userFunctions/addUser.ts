@@ -2,7 +2,7 @@
 
 import { getUser } from ".";
 import User from "../mongo/Schemas/User";
-import { IUser } from "../types";
+import { IUser } from "../../../types";
 
 ////////////////////////////////////////////////////////////////
 // function is used to add a new user to the database
@@ -12,7 +12,7 @@ import { IUser } from "../types";
 // output to the front end. In this case a discord bot
 ////////////////////////////////////////////////////////////////
 export const addUser = async (
-	id: number,
+	id: string,
 	name: string,
 	gamerTag: string,
 	valuation = 0,

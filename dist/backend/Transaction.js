@@ -10,6 +10,7 @@ const userFunctions_1 = require("./userFunctions");
 const Transactions_1 = __importDefault(require("./mongo/Schemas/Transactions"));
 const stocksSimulation_1 = require("./calc/Market/Stocks/stocksSimulation");
 const BN_coin_1 = require("./calc/Market/BN_coin");
+const itemCategories_1 = require("./calc/Market/Stocks/itemCategories");
 ////////////////////////////////////////////////////////////////
 // This function when called will create a new Transaction
 // It checkes quite some things that can go wrong during a transaction
@@ -22,15 +23,15 @@ const BN_coin_1 = require("./calc/Market/BN_coin");
 // Stock Market part of the code.
 // returns a string representing the status of the transaction
 ////////////////////////////////////////////////////////////////
-const Transaction = async (amount, senderId, recipientId, transactionCategory) => {
+const Transaction = async (amount, senderId, recipientId, stringID, transactionCategory = itemCategories_1.itemCategories.SERVICES) => {
     // The senderId and recipientId are the Discord Ids of respective users
     const sender = (await (0, userFunctions_1.getUser)(senderId));
     const recipient = await (0, userFunctions_1.getUser)(recipientId);
-    if (!sender || !recipient)
+    if (!(await (0, userFunctions_1.userExists)(senderId)) || !(await (0, userFunctions_1.userExists)(recipientId)))
         return "user not found"; // if one of the user doesn't exist
-    if (!sender.balance || sender.balance <= amount)
+    if (!sender.balance || sender.balance < amount)
         // if the sender's doesn't have enough balance
-        return "not enough balance";
+        return `Not enough BN Coins`;
     await User_1.default.findOneAndUpdate({ id: sender.id }, { $inc: { balance: -amount } });
     await User_1.default.findOneAndUpdate({ id: recipientId }, { $inc: { balance: amount } });
     const currentTime = Math.floor(Date.now() / 1000);
@@ -44,8 +45,8 @@ const Transaction = async (amount, senderId, recipientId, transactionCategory) =
     (0, stocksSimulation_1.updateValuation)(transactionCategory, amount);
     // if the transaction is made by the Gov. (user 100) it will update the value of coins
     // since the coins in the Gov. reserves are changing.
-    if (senderId === 100 || recipientId === 100)
+    if (senderId === "100" || recipientId === "100")
         (0, BN_coin_1.Coin)(7);
-    return "Transaction successful";
+    return `Successfully sent ${amount} BN coins to <@${stringID}>`;
 };
 exports.default = Transaction;

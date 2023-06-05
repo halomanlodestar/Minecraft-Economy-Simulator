@@ -3,8 +3,9 @@
 import { connectDatabase } from "./../backend/mongo/mongoose";
 import { config } from "dotenv";
 import { Client, IntentsBitField, EmbedBuilder } from "discord.js";
-import { register } from "./slashCommands";
+import { history, register, transactionGov } from "./slashCommands";
 import { balance } from "./slashCommands";
+import { transaction } from "./slashCommands";
 // Basic Tasks
 config();
 connectDatabase();
@@ -34,6 +35,16 @@ client.on("interactionCreate", async (interaction) => {
 			return;
 		case "balance":
 			await balance(interaction, id, embed);
+			return;
+		case "transaction":
+			await transaction(interaction, id, embed);
+			return;
+		case "transaction_gov":
+			await transactionGov(interaction, id, embed);
+			return;
+		case "history":
+			await history(interaction, id, embed);
+			return;
 	}
 });
 

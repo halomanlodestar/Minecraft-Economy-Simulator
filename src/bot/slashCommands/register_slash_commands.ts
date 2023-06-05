@@ -31,6 +31,42 @@ const commands = [
 	{
 		name: "transaction",
 		description: "Send money to another user",
+		options: [
+			{
+				name: "recipient",
+				description: "Mention of the recipient",
+				type: ApplicationCommandOptionType.User,
+				required: true,
+			},
+			{
+				name: "amount",
+				description: "Amount to send",
+				type: ApplicationCommandOptionType.Number,
+				required: true,
+			},
+		],
+	},
+	{
+		name: "transaction_gov",
+		description: "Make transaction from Government Account",
+		options: [
+			{
+				name: "recipient",
+				description: "Mention of the recipient",
+				type: ApplicationCommandOptionType.User,
+				required: true,
+			},
+			{
+				name: "amount",
+				description: "Amount to send",
+				type: ApplicationCommandOptionType.Number,
+				required: true,
+			},
+		],
+	},
+	{
+		name: "history",
+		description: "History of last 10 transactions",
 	},
 ];
 

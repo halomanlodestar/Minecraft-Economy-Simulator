@@ -1,7 +1,7 @@
 /** @format */
 
 import User from "../mongo/Schemas/User";
-import { IUser } from "../types";
+import { IUser } from "../../../types";
 
 ////////////////////////////////////////////////////////////////
 // fetch the data of a user using the id
@@ -9,7 +9,7 @@ import { IUser } from "../types";
 // otherwise a string value will be returned that can be used
 // output for the frontend
 ////////////////////////////////////////////////////////////////
-export const getUser = async (id: number) => {
+export const getUser = async (id: string) => {
 	if (!(await User.findOne({ id: id }))) {
 		return "user not found";
 	}

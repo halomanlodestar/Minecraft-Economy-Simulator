@@ -14,11 +14,7 @@ export const register = async (
 
 	try {
 		interaction.reply({
-			embeds: [
-				embed.setDescription(
-					await addUser(Number.parseInt(id), name, gamerTag)
-				),
-			],
+			embeds: [embed.setDescription(await addUser(id, name, gamerTag))],
 		});
 		return;
 	} catch (error) {

@@ -2,8 +2,8 @@
 
 // import { User } from "./userFunctions/User";
 import User from "./mongo/Schemas/User";
-import { IUser } from "./types";
-import { getUser } from "./userFunctions";
+import { IUser } from "../../types";
+import { getUser, userExists } from "./userFunctions";
 import Transactions from "./mongo/Schemas/Transactions";
 import { updateValuation } from "./calc/Market/Stocks/stocksSimulation";
 import { Coin } from "./calc/Market/BN_coin";
@@ -24,18 +24,20 @@ import { itemCategories } from "./calc/Market/Stocks/itemCategories";
 
 const Transaction = async (
 	amount: number,
-	senderId: number,
-	recipientId: number,
-	transactionCategory: itemCategories
+	senderId: string,
+	recipientId: string,
+	stringID?: string | number | boolean,
+	transactionCategory: itemCategories = itemCategories.SERVICES
 ) => {
 	// The senderId and recipientId are the Discord Ids of respective users
 	const sender = (await getUser(senderId)) as IUser;
 	const recipient = await getUser(recipientId);
 
-	if (!sender || !recipient) return "user not found"; // if one of the user doesn't exist
-	if (!sender.balance || (sender.balance as number) <= amount)
+	if (!(await userExists(senderId)) || !(await userExists(recipientId)))
+		return "user not found"; // if one of the user doesn't exist
+	if (!sender.balance || (sender.balance as number) < amount)
 		// if the sender's doesn't have enough balance
-		return "not enough balance";
+		return `Not enough BN Coins`;
 
 	await User.findOneAndUpdate(
 		{ id: sender.id },
@@ -60,9 +62,9 @@ const Transaction = async (
 
 	// if the transaction is made by the Gov. (user 100) it will update the value of coins
 	// since the coins in the Gov. reserves are changing.
-	if (senderId === 100 || recipientId === 100) Coin(7);
+	if (senderId === "100" || recipientId === "100") Coin(7);
 
-	return "Transaction successful";
+	return `Successfully sent ${amount} BN coins to <@${stringID}>`;
 };
 
 export default Transaction;

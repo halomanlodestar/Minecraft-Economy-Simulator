@@ -3,7 +3,7 @@
 import GovernmentReserve from "../../mongo/Schemas/GovernmentReserve";
 import RelativeValues from "../../mongo/Schemas/RelativeValues";
 import User from "../../mongo/Schemas/User";
-import { IUser } from "../../types";
+import { IUser } from "../../../../types";
 
 interface resources {
 	emerald: number;

@@ -4,7 +4,7 @@ import { Schema, model } from "mongoose";
 
 const userSchema = new Schema({
 	name: String,
-	id: Number,
+	id: String,
 	balance: Number,
 	gamerTag: String,
 	valuation: Number,

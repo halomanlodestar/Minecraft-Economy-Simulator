@@ -23,4 +23,5 @@ export enum itemCategories {
 	REDSTONE = "Redstone Components",
 	DECORATIVE = "Decorated Items",
 	MISC = "Miscellaneous",
+	SERVICES = "Services",
 }

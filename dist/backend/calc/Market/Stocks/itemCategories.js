@@ -25,4 +25,5 @@ var itemCategories;
     itemCategories["REDSTONE"] = "Redstone Components";
     itemCategories["DECORATIVE"] = "Decorated Items";
     itemCategories["MISC"] = "Miscellaneous";
+    itemCategories["SERVICES"] = "Services";
 })(itemCategories = exports.itemCategories || (exports.itemCategories = {}));

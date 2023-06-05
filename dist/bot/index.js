@@ -6,6 +6,7 @@ const dotenv_1 = require("dotenv");
 const discord_js_1 = require("discord.js");
 const slashCommands_1 = require("./slashCommands");
 const slashCommands_2 = require("./slashCommands");
+const slashCommands_3 = require("./slashCommands");
 // Basic Tasks
 (0, dotenv_1.config)();
 (0, mongoose_1.connectDatabase)();
@@ -30,6 +31,16 @@ client.on("interactionCreate", async (interaction) => {
             return;
         case "balance":
             await (0, slashCommands_2.balance)(interaction, id, embed);
+            return;
+        case "transaction":
+            await (0, slashCommands_3.transaction)(interaction, id, embed);
+            return;
+        case "transaction_gov":
+            await (0, slashCommands_1.transactionGov)(interaction, id, embed);
+            return;
+        case "history":
+            await (0, slashCommands_1.history)(interaction, id, embed);
+            return;
     }
 });
 client.login(process.env.TOKEN);

@@ -1,9 +1,9 @@
 /** @format */
 
 import { getUser } from ".";
-import { IUser } from "../types";
+import { IUser } from "../../../types";
 
-export const userExists = async (id: number) => {
+export const userExists = async (id: string) => {
 	if (((await getUser(id)) as IUser).id == id) {
 		return true;
 	}

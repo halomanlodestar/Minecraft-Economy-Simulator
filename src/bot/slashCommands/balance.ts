@@ -1,7 +1,7 @@
 /** @format */
 
 import { EmbedBuilder } from "@discordjs/builders";
-import { IUser } from "../../backend/types";
+import { IUser } from "../../../types";
 import { userExists, getUser } from "../../backend/userFunctions";
 import { CacheType, ChatInputCommandInteraction } from "discord.js";
 
@@ -12,8 +12,8 @@ export const balance = async (
 ) => {
 	try {
 		const intOptionalID = interaction.options.get("user")?.value
-			? (interaction.options.get("user")?.value as number)
-			: Number.parseInt(id);
+			? interaction.options.get("user")?.value?.toString()!
+			: id;
 
 		if (!(await userExists(intOptionalID))) {
 			interaction.reply({
@@ -31,7 +31,7 @@ export const balance = async (
 						interaction.options.get("user")?.value
 							? interaction.options.get("user")?.value
 							: id
-					}> is ${user.balance}`
+					}> is ${user.balance} BN Coins`
 				),
 			],
 		});

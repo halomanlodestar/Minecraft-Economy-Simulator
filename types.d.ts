@@ -9,10 +9,10 @@ interface resource {
 
 interface IUser {
 	name: String;
-	id: Number;
-	balance: Number;
+	id: string;
+	balance: number;
 	gamerTag: String;
-	valuation: Number;
+	valuation: number;
 }
 
 export enum Status {
