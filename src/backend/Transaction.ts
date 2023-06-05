@@ -58,7 +58,9 @@ const Transaction = async (
 
 	updateValuation(transactionCategory, amount);
 
-	if (senderId === 100 || recipientId === 100) Coin(10);
+	// if the transaction is made by the Gov. (user 100) it will update the value of coins
+	// since the coins in the Gov. reserves are changing.
+	if (senderId === 100 || recipientId === 100) Coin(7);
 
 	return "Transaction successful";
 };

@@ -42,8 +42,10 @@ const Transaction = async (amount, senderId, recipientId, transactionCategory) =
         transactionCategory,
     }).save();
     (0, stocksSimulation_1.updateValuation)(transactionCategory, amount);
+    // if the transaction is made by the Gov. (user 100) it will update the value of coins
+    // since the coins in the Gov. reserves are changing.
     if (senderId === 100 || recipientId === 100)
-        (0, BN_coin_1.Coin)(10);
+        (0, BN_coin_1.Coin)(7);
     return "Transaction successful";
 };
 exports.default = Transaction;

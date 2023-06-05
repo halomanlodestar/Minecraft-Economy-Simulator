@@ -1,8 +1,13 @@
 /** @format */
 
+import { connectDatabase } from "./../backend/mongo/mongoose";
 import { config } from "dotenv";
-import { Client, IntentsBitField } from "discord.js";
+import { Client, IntentsBitField, EmbedBuilder } from "discord.js";
+import { register } from "./slashCommands";
+import { balance } from "./slashCommands";
+// Basic Tasks
 config();
+connectDatabase();
 
 const intents = new IntentsBitField([
 	IntentsBitField.Flags.Guilds,
@@ -17,15 +22,18 @@ const client = new Client({
 
 client.once("ready", (c) => console.log(`${c.user.tag} is Online ✅`));
 
-client.on("messageCreate", (message) => {
-	const [command, amount, channel] = message.content
-		.split(" ")
-		.filter((c) => c.length != 0);
-	if (!message.author.bot && command === "!purge") {
-		message.channel.send(
-			`purged ${command} messaged from ${channel ? channel : message.channel}`
-		);
-		console.log(`purge message logged by ${message.author.username}`);
+client.on("interactionCreate", async (interaction) => {
+	if (!interaction.isChatInputCommand()) return;
+
+	const id = interaction.user.id;
+	const embed = new EmbedBuilder().setColor("Green");
+
+	switch (interaction.commandName) {
+		case "register":
+			await register(interaction, id, embed);
+			return;
+		case "balance":
+			await balance(interaction, id, embed);
 	}
 });
 

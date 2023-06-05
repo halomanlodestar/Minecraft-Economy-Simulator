@@ -16,10 +16,10 @@ const User_1 = __importDefault(require("../mongo/Schemas/User"));
 ////////////////////////////////////////////////////////////////
 const addUser = async (id, name, gamerTag, valuation = 0, balance = 0) => {
     if ((await (0, _1.getUser)(id)).id === id) {
-        return "User already exists";
+        return "User has alread registered";
     }
     const user = new User_1.default({ id, name, balance, gamerTag, valuation });
     await user.save();
-    return "User successfully created";
+    return `Successfully registered <@${id}>`;
 };
 exports.addUser = addUser;

@@ -12,6 +12,7 @@ exports.categories = [
     { category: "Redstone Components", valuation: 0 },
     { category: "Decorative Items", valuation: 0 },
     { category: "Miscellaneous", valuation: 0 },
+    { category: "Services", valuation: 0 },
 ];
 var itemCategories;
 (function (itemCategories) {

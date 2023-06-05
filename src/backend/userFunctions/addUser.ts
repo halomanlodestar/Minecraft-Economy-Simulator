@@ -19,11 +19,11 @@ export const addUser = async (
 	balance = 0
 ) => {
 	if (((await getUser(id)) as IUser).id === id) {
-		return "User already exists";
+		return "User has alread registered";
 	}
 
 	const user = new User({ id, name, balance, gamerTag, valuation });
 	await user.save();
 
-	return "User successfully created";
+	return `Successfully registered <@${id}>`;
 };
