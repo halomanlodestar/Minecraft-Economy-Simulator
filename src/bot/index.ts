@@ -2,10 +2,23 @@
 
 import { connectDatabase } from "./../backend/mongo/mongoose";
 import { config } from "dotenv";
-import { Client, IntentsBitField, EmbedBuilder } from "discord.js";
-import { history, register, transactionGov } from "./slashCommands";
-import { balance } from "./slashCommands";
-import { transaction } from "./slashCommands";
+import {
+	Client,
+	IntentsBitField,
+	EmbedBuilder,
+	ActivityType,
+} from "discord.js";
+import {
+	history,
+	landprices,
+	register,
+	revertTransaction,
+	transactionGov,
+} from "./commands";
+import { balance } from "./commands";
+import { transaction } from "./commands";
+import { values } from "./commands/values";
+import { leaderboard } from "./commands/leaderboard";
 // Basic Tasks
 config();
 connectDatabase();
@@ -21,7 +34,13 @@ const client = new Client({
 	intents: intents,
 });
 
-client.once("ready", (c) => console.log(`${c.user.tag} is Online ✅`));
+client.once("ready", (c) => {
+	console.log(`${c.user.tag} is Online ✅`);
+	client.user?.setActivity({
+		name: "Under Development :D",
+		type: ActivityType.Playing,
+	});
+});
 
 client.on("interactionCreate", async (interaction) => {
 	if (!interaction.isChatInputCommand()) return;
@@ -44,6 +63,18 @@ client.on("interactionCreate", async (interaction) => {
 			return;
 		case "history":
 			await history(interaction, id, embed);
+			return;
+		case "landprices":
+			await landprices(interaction, id, embed);
+			return;
+		case "values":
+			await values(interaction, id, embed);
+			return;
+		case "leaderboard":
+			await leaderboard(interaction, id, embed);
+			return;
+		case "reverttransaction":
+			await revertTransaction(interaction, id, embed);
 			return;
 	}
 });

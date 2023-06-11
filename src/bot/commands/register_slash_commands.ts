@@ -4,7 +4,19 @@ import { config } from "dotenv";
 import { Routes, REST, ApplicationCommandOptionType } from "discord.js";
 config();
 
-const commands = [
+interface command {
+	name: string;
+	description: string;
+	options?: {
+		name: string;
+		description: string;
+		type: ApplicationCommandOptionType;
+		required?: boolean;
+	}[];
+}
+[];
+
+const commands: command[] = [
 	{
 		name: "register",
 		description: "Register your Account",
@@ -67,6 +79,51 @@ const commands = [
 	{
 		name: "history",
 		description: "History of last 10 transactions",
+	},
+	{
+		name: "landprices",
+		description: "Check Latest Land prices",
+		options: [
+			{
+				name: "max_players",
+				description: "The maximum number of concurrent players",
+				type: ApplicationCommandOptionType.Number,
+				required: true,
+			},
+			{
+				name: "land",
+				description: "Blocks of land left",
+				type: ApplicationCommandOptionType.String,
+				required: true,
+			},
+		],
+	},
+	{
+		name: "values",
+		description: "Get Values of other currencies relative to BNC",
+		options: [
+			{
+				name: "quantity",
+				description: "Quantity calculated for you",
+				type: ApplicationCommandOptionType.Number,
+			},
+		],
+	},
+	{
+		name: "leaderboard",
+		description: "Check balance leaderboard",
+	},
+	{
+		name: "reverttransaction",
+		description: "Send money to Government",
+		options: [
+			{
+				name: "amount",
+				description: "Amount of money to send",
+				required: true,
+				type: ApplicationCommandOptionType.Number,
+			},
+		],
 	},
 ];
 

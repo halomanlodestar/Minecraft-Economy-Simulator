@@ -15,7 +15,7 @@ interface resources {
 // Lowers = rarer
 const rarityFactory = {
 	diamond: 0.2,
-	emerald: 1.2,
+	emerald: 1.1,
 	gold: 1.0,
 	iron: 1.1,
 };
@@ -84,9 +84,14 @@ const calcualteRelativeValues = (
 ): number => {
 	const value =
 		((amount * concurrentPlayers * rarityFactory[name]) / 100) *
-			(balance / totalAmount) +
+			(totalAmount / balance) +
 		1;
+
 	// adding +1 incase the value is 0, these coins will be for free.
 	// in some cases the value will remain as low as 1. such as in case of diamond
 	return Math.round(value);
+};
+
+export const getReltiveValues = async () => {
+	return (await RelativeValues.find().sort({ _id: -1 }).limit(1))[0]!;
 };
